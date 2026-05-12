@@ -1,0 +1,1158 @@
+{
+  "last_node_id": 16,
+  "last_link_id": 22,
+  "last_group_id": 3,
+  "nodes": [
+    {
+      "id": 1,
+      "type": "UNETLoader",
+      "pos": [
+        60,
+        160
+      ],
+      "size": {
+        "0": 315,
+        "1": 58
+      },
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            1
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "UNETLoader"
+      },
+      "widgets_values": [
+        "ltx-2.3-22b-distilled-1.1.safetensors",
+        "default"
+      ],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 2,
+      "type": "DualCLIPLoader",
+      "pos": [
+        60,
+        280
+      ],
+      "size": {
+        "0": 315,
+        "1": 106
+      },
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "CLIP",
+          "type": "CLIP",
+          "links": [
+            3
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "DualCLIPLoader"
+      },
+      "widgets_values": [
+        "gemma_3_12B_it_fp8/gemma_3_12B_it_fp8-text-encoder.safetensors",
+        "ltx",
+        "default"
+      ],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 3,
+      "type": "VAELoader",
+      "pos": [
+        60,
+        440
+      ],
+      "size": {
+        "0": 315,
+        "1": 58
+      },
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "VAE",
+          "type": "VAE",
+          "links": [
+            2
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAELoader"
+      },
+      "widgets_values": [
+        "ltx_video_2_1_vae.safetensors"
+      ],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 4,
+      "type": "KSamplerSelect",
+      "pos": [
+        60,
+        560
+      ],
+      "size": {
+        "0": 315,
+        "1": 58
+      },
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "SAMPLER",
+          "type": "SAMPLER",
+          "links": [
+            5
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "KSamplerSelect"
+      },
+      "widgets_values": [
+        "euler_ancestral_cfg_pp"
+      ],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 5,
+      "type": "BasicScheduler",
+      "pos": [
+        60,
+        680
+      ],
+      "size": {
+        "0": 315,
+        "1": 106
+      },
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": null,
+          "slot_index": 0
+        }
+      ],
+      "outputs": [
+        {
+          "name": "SIGMAS",
+          "type": "SIGMAS",
+          "links": [
+            6
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "BasicScheduler"
+      },
+      "widgets_values": [
+        "sgm_uniform",
+        4,
+        1.0
+      ],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 6,
+      "type": "CFGGuider",
+      "pos": [
+        60,
+        840
+      ],
+      "size": {
+        "0": 315,
+        "1": 98
+      },
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": null,
+          "slot_index": 0
+        },
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": null,
+          "slot_index": 0
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": null,
+          "slot_index": 0
+        }
+      ],
+      "outputs": [
+        {
+          "name": "GUIDER",
+          "type": "GUIDER",
+          "links": [
+            4
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CFGGuider"
+      },
+      "widgets_values": [
+        1.0
+      ],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 7,
+      "type": "FW_LTXPipeMake",
+      "pos": [
+        480,
+        360
+      ],
+      "size": {
+        "0": 260,
+        "1": 160
+      },
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 1,
+          "slot_index": 0
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 2,
+          "slot_index": 0
+        },
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 3,
+          "slot_index": 0
+        },
+        {
+          "name": "guider",
+          "type": "GUIDER",
+          "link": 4,
+          "slot_index": 0
+        },
+        {
+          "name": "sampler",
+          "type": "SAMPLER",
+          "link": 5,
+          "slot_index": 0
+        },
+        {
+          "name": "sigmas",
+          "type": "SIGMAS",
+          "link": 6,
+          "slot_index": 0
+        }
+      ],
+      "outputs": [
+        {
+          "name": "ltx_pipe",
+          "type": "LTX_PIPE",
+          "links": [
+            7
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "FW_LTXPipeMake"
+      },
+      "widgets_values": [],
+      "color": "#2a363b",
+      "bgcolor": "#3d5159"
+    },
+    {
+      "id": 8,
+      "type": "LoadImage",
+      "pos": [
+        480,
+        80
+      ],
+      "size": {
+        "0": 260,
+        "1": 100
+      },
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            8
+          ],
+          "slot_index": 0
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": [],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": [
+        "example.png",
+        "image"
+      ],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 9,
+      "type": "FW_LTXScene",
+      "pos": [
+        860,
+        80
+      ],
+      "size": {
+        "0": 400,
+        "1": 310
+      },
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "ltx_pipe",
+          "type": "LTX_PIPE",
+          "link": 7,
+          "slot_index": 0
+        },
+        {
+          "name": "reference_image",
+          "type": "IMAGE",
+          "link": 8,
+          "slot_index": 1
+        }
+      ],
+      "outputs": [
+        {
+          "name": "ltx_pipe",
+          "type": "LTX_PIPE",
+          "links": [
+            9
+          ],
+          "slot_index": 0
+        },
+        {
+          "name": "video_frames",
+          "type": "IMAGE",
+          "links": [
+            17
+          ],
+          "slot_index": 1
+        },
+        {
+          "name": "last_frame",
+          "type": "IMAGE",
+          "links": [
+            10
+          ],
+          "slot_index": 2
+        },
+        {
+          "name": "latent",
+          "type": "LATENT",
+          "links": [],
+          "slot_index": 3
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "FW_LTXScene"
+      },
+      "widgets_values": [
+        "A cinematic wide-angle shot of a vast ocean at golden hour, warm sunlight reflecting off gentle waves, seagulls gliding across the sky, cinematic color grading",
+        "blurry, distorted, static, low quality, watermark, text",
+        97,
+        768,
+        512,
+        42,
+        "randomize",
+        0.9
+      ],
+      "title": "\ud83c\udfac Scene 1",
+      "color": "#1b4332",
+      "bgcolor": "#2d6a4f"
+    },
+    {
+      "id": 10,
+      "type": "FW_LTXScene",
+      "pos": [
+        860,
+        460
+      ],
+      "size": {
+        "0": 400,
+        "1": 310
+      },
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "ltx_pipe",
+          "type": "LTX_PIPE",
+          "link": 9,
+          "slot_index": 0
+        },
+        {
+          "name": "reference_image",
+          "type": "IMAGE",
+          "link": 10,
+          "slot_index": 1
+        }
+      ],
+      "outputs": [
+        {
+          "name": "ltx_pipe",
+          "type": "LTX_PIPE",
+          "links": [
+            11
+          ],
+          "slot_index": 0
+        },
+        {
+          "name": "video_frames",
+          "type": "IMAGE",
+          "links": [
+            18
+          ],
+          "slot_index": 1
+        },
+        {
+          "name": "last_frame",
+          "type": "IMAGE",
+          "links": [
+            12
+          ],
+          "slot_index": 2
+        },
+        {
+          "name": "latent",
+          "type": "LATENT",
+          "links": [],
+          "slot_index": 3
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "FW_LTXScene"
+      },
+      "widgets_values": [
+        "A dramatic close-up of ocean waves crashing against dark volcanic rocks, water droplets catching golden light, slow motion feel, cinematic depth of field",
+        "blurry, distorted, static, low quality, watermark, text",
+        97,
+        768,
+        512,
+        153,
+        "randomize",
+        0.9
+      ],
+      "title": "\ud83c\udfac Scene 2",
+      "color": "#1b4332",
+      "bgcolor": "#2d6a4f"
+    },
+    {
+      "id": 11,
+      "type": "FW_LTXScene",
+      "pos": [
+        860,
+        840
+      ],
+      "size": {
+        "0": 400,
+        "1": 310
+      },
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "ltx_pipe",
+          "type": "LTX_PIPE",
+          "link": 11,
+          "slot_index": 0
+        },
+        {
+          "name": "reference_image",
+          "type": "IMAGE",
+          "link": 12,
+          "slot_index": 1
+        }
+      ],
+      "outputs": [
+        {
+          "name": "ltx_pipe",
+          "type": "LTX_PIPE",
+          "links": [
+            13
+          ],
+          "slot_index": 0
+        },
+        {
+          "name": "video_frames",
+          "type": "IMAGE",
+          "links": [
+            19
+          ],
+          "slot_index": 1
+        },
+        {
+          "name": "last_frame",
+          "type": "IMAGE",
+          "links": [
+            14
+          ],
+          "slot_index": 2
+        },
+        {
+          "name": "latent",
+          "type": "LATENT",
+          "links": [],
+          "slot_index": 3
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "FW_LTXScene"
+      },
+      "widgets_values": [
+        "A serene night sky over the ocean, moonlight reflecting on calm dark water, bioluminescent plankton glowing along the shoreline, peaceful atmosphere",
+        "blurry, distorted, static, low quality, watermark, text",
+        97,
+        768,
+        512,
+        264,
+        "randomize",
+        0.9
+      ],
+      "title": "\ud83c\udfac Scene 3",
+      "color": "#1b4332",
+      "bgcolor": "#2d6a4f"
+    },
+    {
+      "id": 12,
+      "type": "FW_LTXScene",
+      "pos": [
+        860,
+        1220
+      ],
+      "size": {
+        "0": 400,
+        "1": 310
+      },
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "ltx_pipe",
+          "type": "LTX_PIPE",
+          "link": 13,
+          "slot_index": 0
+        },
+        {
+          "name": "reference_image",
+          "type": "IMAGE",
+          "link": 14,
+          "slot_index": 1
+        }
+      ],
+      "outputs": [
+        {
+          "name": "ltx_pipe",
+          "type": "LTX_PIPE",
+          "links": [
+            15
+          ],
+          "slot_index": 0
+        },
+        {
+          "name": "video_frames",
+          "type": "IMAGE",
+          "links": [
+            20
+          ],
+          "slot_index": 1
+        },
+        {
+          "name": "last_frame",
+          "type": "IMAGE",
+          "links": [
+            16
+          ],
+          "slot_index": 2
+        },
+        {
+          "name": "latent",
+          "type": "LATENT",
+          "links": [],
+          "slot_index": 3
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "FW_LTXScene"
+      },
+      "widgets_values": [
+        "An aerial drone shot tracking along the coastline at sunrise, revealing hidden coves and sea stacks, epic scale, golden light streaming through clouds",
+        "blurry, distorted, static, low quality, watermark, text",
+        97,
+        768,
+        512,
+        375,
+        "randomize",
+        0.9
+      ],
+      "title": "\ud83c\udfac Scene 4",
+      "color": "#1b4332",
+      "bgcolor": "#2d6a4f"
+    },
+    {
+      "id": 13,
+      "type": "FW_LTXScene",
+      "pos": [
+        860,
+        1600
+      ],
+      "size": {
+        "0": 400,
+        "1": 310
+      },
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "ltx_pipe",
+          "type": "LTX_PIPE",
+          "link": 15,
+          "slot_index": 0
+        },
+        {
+          "name": "reference_image",
+          "type": "IMAGE",
+          "link": 16,
+          "slot_index": 1
+        }
+      ],
+      "outputs": [
+        {
+          "name": "ltx_pipe",
+          "type": "LTX_PIPE",
+          "links": [],
+          "slot_index": 0
+        },
+        {
+          "name": "video_frames",
+          "type": "IMAGE",
+          "links": [
+            21
+          ],
+          "slot_index": 1
+        },
+        {
+          "name": "last_frame",
+          "type": "IMAGE",
+          "links": [],
+          "slot_index": 2
+        },
+        {
+          "name": "latent",
+          "type": "LATENT",
+          "links": [],
+          "slot_index": 3
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "FW_LTXScene"
+      },
+      "widgets_values": [
+        "A mesmerizing underwater shot of sunlight filtering through the ocean surface, schools of fish swimming in formation, blue-green color palette, ethereal glow",
+        "blurry, distorted, static, low quality, watermark, text",
+        97,
+        768,
+        512,
+        486,
+        "randomize",
+        0.85
+      ],
+      "title": "\ud83c\udfac Scene 5",
+      "color": "#1b4332",
+      "bgcolor": "#2d6a4f"
+    },
+    {
+      "id": 14,
+      "type": "FW_VideoBatcher",
+      "pos": [
+        1400,
+        500
+      ],
+      "size": {
+        "0": 280,
+        "1": 180
+      },
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "video_1",
+          "type": "IMAGE",
+          "link": 17,
+          "slot_index": 0
+        },
+        {
+          "name": "video_2",
+          "type": "IMAGE",
+          "link": 18,
+          "slot_index": 1
+        },
+        {
+          "name": "video_3",
+          "type": "IMAGE",
+          "link": 19,
+          "slot_index": 2
+        },
+        {
+          "name": "video_4",
+          "type": "IMAGE",
+          "link": 20,
+          "slot_index": 3
+        },
+        {
+          "name": "video_5",
+          "type": "IMAGE",
+          "link": 21,
+          "slot_index": 4
+        },
+        {
+          "name": "video_6",
+          "type": "IMAGE",
+          "link": null,
+          "slot_index": 5
+        },
+        {
+          "name": "video_7",
+          "type": "IMAGE",
+          "link": null,
+          "slot_index": 6
+        },
+        {
+          "name": "video_8",
+          "type": "IMAGE",
+          "link": null,
+          "slot_index": 7
+        },
+        {
+          "name": "video_9",
+          "type": "IMAGE",
+          "link": null,
+          "slot_index": 8
+        },
+        {
+          "name": "video_10",
+          "type": "IMAGE",
+          "link": null,
+          "slot_index": 9
+        }
+      ],
+      "outputs": [
+        {
+          "name": "combined_video",
+          "type": "IMAGE",
+          "links": [
+            22
+          ],
+          "slot_index": 0
+        },
+        {
+          "name": "total_frames",
+          "type": "INT",
+          "links": [],
+          "slot_index": 1
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "FW_VideoBatcher"
+      },
+      "widgets_values": [],
+      "color": "#4a1942",
+      "bgcolor": "#6b2c62"
+    },
+    {
+      "id": 15,
+      "type": "VHS_VideoCombine",
+      "pos": [
+        1780,
+        500
+      ],
+      "size": {
+        "0": 315,
+        "1": 218
+      },
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 22,
+          "slot_index": 0
+        },
+        {
+          "name": "audio",
+          "type": "AUDIO",
+          "link": null,
+          "slot_index": 1
+        },
+        {
+          "name": "meta_batch",
+          "type": "VHS_BatchManager",
+          "link": null,
+          "slot_index": 2
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": null,
+          "slot_index": 3
+        }
+      ],
+      "outputs": [
+        {
+          "name": "Filenames",
+          "type": "VHS_FILENAMES",
+          "links": [],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VHS_VideoCombine"
+      },
+      "widgets_values": [
+        24,
+        0,
+        "magic_5scene",
+        "video/h264-mp4",
+        false,
+        true,
+        "",
+        "",
+        ""
+      ],
+      "color": "#553322",
+      "bgcolor": "#664433"
+    },
+    {
+      "id": 16,
+      "type": "Note",
+      "pos": [
+        860,
+        1980
+      ],
+      "size": {
+        "0": 400,
+        "1": 130
+      },
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "Note"
+      },
+      "widgets_values": [
+        "HOW TO ADD MORE SCENES:\n\n1. Right-click any Scene node \u2192 Clone\n2. Wire previous scene's 'last_frame' \u2192 new scene's 'reference_image'\n3. Wire previous scene's 'ltx_pipe' \u2192 new scene's 'ltx_pipe'\n4. Wire new scene's 'video_frames' \u2192 next free slot on VideoBatcher\n5. Change the prompt and seed"
+      ],
+      "color": "#335533",
+      "bgcolor": "#446644"
+    }
+  ],
+  "links": [
+    [
+      1,
+      1,
+      0,
+      7,
+      0,
+      "MODEL"
+    ],
+    [
+      2,
+      3,
+      0,
+      7,
+      1,
+      "VAE"
+    ],
+    [
+      3,
+      2,
+      0,
+      7,
+      2,
+      "CLIP"
+    ],
+    [
+      4,
+      6,
+      0,
+      7,
+      3,
+      "GUIDER"
+    ],
+    [
+      5,
+      4,
+      0,
+      7,
+      4,
+      "SAMPLER"
+    ],
+    [
+      6,
+      5,
+      0,
+      7,
+      5,
+      "SIGMAS"
+    ],
+    [
+      7,
+      7,
+      0,
+      9,
+      0,
+      "LTX_PIPE"
+    ],
+    [
+      8,
+      8,
+      0,
+      9,
+      1,
+      "IMAGE"
+    ],
+    [
+      9,
+      9,
+      0,
+      10,
+      0,
+      "LTX_PIPE"
+    ],
+    [
+      10,
+      9,
+      2,
+      10,
+      1,
+      "IMAGE"
+    ],
+    [
+      11,
+      10,
+      0,
+      11,
+      0,
+      "LTX_PIPE"
+    ],
+    [
+      12,
+      10,
+      2,
+      11,
+      1,
+      "IMAGE"
+    ],
+    [
+      13,
+      11,
+      0,
+      12,
+      0,
+      "LTX_PIPE"
+    ],
+    [
+      14,
+      11,
+      2,
+      12,
+      1,
+      "IMAGE"
+    ],
+    [
+      15,
+      12,
+      0,
+      13,
+      0,
+      "LTX_PIPE"
+    ],
+    [
+      16,
+      12,
+      2,
+      13,
+      1,
+      "IMAGE"
+    ],
+    [
+      17,
+      9,
+      1,
+      14,
+      0,
+      "IMAGE"
+    ],
+    [
+      18,
+      10,
+      1,
+      14,
+      1,
+      "IMAGE"
+    ],
+    [
+      19,
+      11,
+      1,
+      14,
+      2,
+      "IMAGE"
+    ],
+    [
+      20,
+      12,
+      1,
+      14,
+      3,
+      "IMAGE"
+    ],
+    [
+      21,
+      13,
+      1,
+      14,
+      4,
+      "IMAGE"
+    ],
+    [
+      22,
+      14,
+      0,
+      15,
+      0,
+      "IMAGE"
+    ]
+  ],
+  "groups": [
+    {
+      "id": 1,
+      "title": "\ud83d\udd27 Model Loaders",
+      "bounding": [
+        40,
+        120,
+        720,
+        860
+      ],
+      "color": "#88A",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 2,
+      "title": "\ud83c\udfac Scene Chain (5 scenes)",
+      "bounding": [
+        840,
+        50,
+        430,
+        1960
+      ],
+      "color": "#8A8",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 3,
+      "title": "\ud83d\udcf9 Video Output",
+      "bounding": [
+        1380,
+        470,
+        740,
+        280
+      ],
+      "color": "#AA8",
+      "font_size": 24,
+      "flags": {}
+    }
+  ],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.7,
+      "offset": [
+        0,
+        0
+      ]
+    },
+    "info": {
+      "name": "ComfyUI-Magic 5-Scene Chained Video",
+      "author": "ComfyUI-Magic",
+      "description": "5-scene chained video generation. Each scene: 97 frames (~4.0s). Total: ~20s at 24fps.",
+      "version": "1.0.0"
+    }
+  },
+  "version": 0.4
+}
