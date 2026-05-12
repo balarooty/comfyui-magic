@@ -1,0 +1,4 @@
+# FrameWeaver LTX Scene Nodes
+# No additional dependencies — relies on:
+#   - ComfyUI core (torch, comfy, comfy_extras)
+#   - ComfyUI-LTXVideo custom node pack (Lightricks) for LTXVBaseSampler

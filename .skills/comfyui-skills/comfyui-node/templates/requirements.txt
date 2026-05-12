@@ -1,0 +1,38 @@
+# =============================================================================
+# ComfyUI Custom Node Dependencies
+# =============================================================================
+# List Python packages required by this node pack.
+#
+# Guidelines:
+#   - Use version ranges (>=) not exact pins (==) for flexibility
+#   - Only list direct dependencies, not transitive ones
+#   - ComfyUI core already provides: torch, numpy, safetensors, transformers
+#   - Check if a dependency is already installed by ComfyUI before adding it
+#   - Test with minimum versions to ensure compatibility
+#
+# Install: pip install -r requirements.txt
+# =============================================================================
+
+# --- Core ML / Math ---
+# torch>=2.0.0                 # usually pre-installed by ComfyUI
+# numpy>=1.24.0                # usually pre-installed by ComfyUI
+# safetensors>=0.4.0           # usually pre-installed by ComfyUI
+
+# --- Image Processing ---
+# opencv-python>=4.8.0         # cv2 for image manipulation
+# Pillow>=10.0.0               # PIL for image I/O
+# scikit-image>=0.21.0         # skimage for advanced image processing
+
+# --- Scientific Computing ---
+# scipy>=1.10.0                # scientific algorithms
+# numba>=0.57.0                # JIT compilation for numerical code
+
+# --- Utilities ---
+# requests>=2.28.0             # HTTP requests
+# tqdm>=4.65.0                 # progress bars
+# einops>=0.6.0                # tensor operations
+# kornia>=0.7.0                # differentiable computer vision
+
+# --- Optional: GPU accelerated libraries ---
+# triton>=2.0.0                # GPU kernel compilation (Linux only)
+# xformers>=0.0.20             # memory-efficient attention (requires matching torch version)

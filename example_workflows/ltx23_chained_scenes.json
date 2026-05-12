@@ -1,0 +1,407 @@
+{
+  "last_node_id": 15,
+  "last_link_id": 22,
+  "last_group_id": 4,
+  "nodes": [
+    {
+      "id": 1,
+      "type": "UNETLoader",
+      "pos": [60, 160],
+      "size": {"0": 315, "1": 58},
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {"name": "MODEL", "type": "MODEL", "links": [1], "slot_index": 0}
+      ],
+      "properties": {"Node name for S&R": "UNETLoader"},
+      "widgets_values": ["ltx-2.3-22b-distilled-1.1.safetensors", "default"],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 2,
+      "type": "DualCLIPLoader",
+      "pos": [60, 280],
+      "size": {"0": 315, "1": 106},
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {"name": "CLIP", "type": "CLIP", "links": [2], "slot_index": 0}
+      ],
+      "properties": {"Node name for S&R": "DualCLIPLoader"},
+      "widgets_values": ["gemma_3_12B_it_fp8/gemma_3_12B_it_fp8-text-encoder.safetensors", "ltx", "default"],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 3,
+      "type": "VAELoader",
+      "pos": [60, 440],
+      "size": {"0": 315, "1": 58},
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {"name": "VAE", "type": "VAE", "links": [3], "slot_index": 0}
+      ],
+      "properties": {"Node name for S&R": "VAELoader"},
+      "widgets_values": ["ltx_video_2_1_vae.safetensors"],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 4,
+      "type": "KSamplerSelect",
+      "pos": [60, 560],
+      "size": {"0": 315, "1": 58},
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {"name": "SAMPLER", "type": "SAMPLER", "links": [5], "slot_index": 0}
+      ],
+      "properties": {"Node name for S&R": "KSamplerSelect"},
+      "widgets_values": ["euler_ancestral_cfg_pp"],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 5,
+      "type": "BasicScheduler",
+      "pos": [60, 680],
+      "size": {"0": 315, "1": 106},
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [
+        {"name": "model", "type": "MODEL", "link": null, "slot_index": 0}
+      ],
+      "outputs": [
+        {"name": "SIGMAS", "type": "SIGMAS", "links": [6], "slot_index": 0}
+      ],
+      "properties": {"Node name for S&R": "BasicScheduler"},
+      "widgets_values": ["sgm_uniform", 4, 1.0],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 6,
+      "type": "CFGGuider",
+      "pos": [60, 840],
+      "size": {"0": 315, "1": 98},
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [
+        {"name": "model", "type": "MODEL", "link": null, "slot_index": 0},
+        {"name": "positive", "type": "CONDITIONING", "link": null, "slot_index": 1},
+        {"name": "negative", "type": "CONDITIONING", "link": null, "slot_index": 2}
+      ],
+      "outputs": [
+        {"name": "GUIDER", "type": "GUIDER", "links": [4], "slot_index": 0}
+      ],
+      "properties": {"Node name for S&R": "CFGGuider"},
+      "widgets_values": [1.0],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 7,
+      "type": "FW_LTXPipeMake",
+      "pos": [480, 360],
+      "size": {"0": 260, "1": 160},
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [
+        {"name": "model", "type": "MODEL", "link": 1, "slot_index": 0},
+        {"name": "vae", "type": "VAE", "link": 3, "slot_index": 1},
+        {"name": "clip", "type": "CLIP", "link": 2, "slot_index": 2},
+        {"name": "guider", "type": "GUIDER", "link": 4, "slot_index": 3},
+        {"name": "sampler", "type": "SAMPLER", "link": 5, "slot_index": 4},
+        {"name": "sigmas", "type": "SIGMAS", "link": 6, "slot_index": 5}
+      ],
+      "outputs": [
+        {"name": "ltx_pipe", "type": "LTX_PIPE", "links": [7], "slot_index": 0}
+      ],
+      "properties": {"Node name for S&R": "FW_LTXPipeMake"},
+      "widgets_values": [],
+      "color": "#2a363b",
+      "bgcolor": "#3d5159"
+    },
+    {
+      "id": 8,
+      "type": "LoadImage",
+      "pos": [480, 80],
+      "size": {"0": 260, "1": 100},
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {"name": "IMAGE", "type": "IMAGE", "links": [8], "slot_index": 0},
+        {"name": "MASK", "type": "MASK", "links": [], "slot_index": 1}
+      ],
+      "properties": {"Node name for S&R": "LoadImage"},
+      "widgets_values": ["example.png", "image"],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 9,
+      "type": "FW_LTXScene",
+      "pos": [860, 80],
+      "size": {"0": 400, "1": 310},
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [
+        {"name": "ltx_pipe", "type": "LTX_PIPE", "link": 7, "slot_index": 0},
+        {"name": "reference_image", "type": "IMAGE", "link": 8, "slot_index": 1}
+      ],
+      "outputs": [
+        {"name": "ltx_pipe", "type": "LTX_PIPE", "links": [9], "slot_index": 0},
+        {"name": "video_frames", "type": "IMAGE", "links": [18], "slot_index": 1},
+        {"name": "last_frame", "type": "IMAGE", "links": [10], "slot_index": 2},
+        {"name": "latent", "type": "LATENT", "links": [], "slot_index": 3}
+      ],
+      "title": "🎬 Scene 1 — Opening Shot",
+      "properties": {"Node name for S&R": "FW_LTXScene"},
+      "widgets_values": [
+        "A cinematic wide-angle shot of a vast ocean at golden hour, warm sunlight reflecting off gentle waves, seagulls gliding across the sky, soft clouds in the background, cinematic color grading, smooth camera pan",
+        "blurry, distorted, static, low quality, watermark, text",
+        97,
+        768,
+        512,
+        42,
+        "randomize",
+        0.9
+      ],
+      "color": "#1b4332",
+      "bgcolor": "#2d6a4f"
+    },
+    {
+      "id": 10,
+      "type": "FW_LTXScene",
+      "pos": [860, 460],
+      "size": {"0": 400, "1": 310},
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [
+        {"name": "ltx_pipe", "type": "LTX_PIPE", "link": 9, "slot_index": 0},
+        {"name": "reference_image", "type": "IMAGE", "link": 10, "slot_index": 1}
+      ],
+      "outputs": [
+        {"name": "ltx_pipe", "type": "LTX_PIPE", "links": [11], "slot_index": 0},
+        {"name": "video_frames", "type": "IMAGE", "links": [19], "slot_index": 1},
+        {"name": "last_frame", "type": "IMAGE", "links": [12], "slot_index": 2},
+        {"name": "latent", "type": "LATENT", "links": [], "slot_index": 3}
+      ],
+      "title": "🎬 Scene 2 — Close-Up",
+      "properties": {"Node name for S&R": "FW_LTXScene"},
+      "widgets_values": [
+        "A dramatic close-up of ocean waves crashing against dark volcanic rocks, water droplets catching golden light, slow motion feel, cinematic depth of field, detailed water simulation",
+        "blurry, distorted, static, low quality, watermark, text",
+        97,
+        768,
+        512,
+        123,
+        "randomize",
+        0.9
+      ],
+      "color": "#1b4332",
+      "bgcolor": "#2d6a4f"
+    },
+    {
+      "id": 11,
+      "type": "FW_LTXScene",
+      "pos": [860, 840],
+      "size": {"0": 400, "1": 310},
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [
+        {"name": "ltx_pipe", "type": "LTX_PIPE", "link": 11, "slot_index": 0},
+        {"name": "reference_image", "type": "IMAGE", "link": 12, "slot_index": 1}
+      ],
+      "outputs": [
+        {"name": "ltx_pipe", "type": "LTX_PIPE", "links": [], "slot_index": 0},
+        {"name": "video_frames", "type": "IMAGE", "links": [20], "slot_index": 1},
+        {"name": "last_frame", "type": "IMAGE", "links": [], "slot_index": 2},
+        {"name": "latent", "type": "LATENT", "links": [], "slot_index": 3}
+      ],
+      "title": "🎬 Scene 3 — Night Transition",
+      "properties": {"Node name for S&R": "FW_LTXScene"},
+      "widgets_values": [
+        "A serene night sky over the ocean, moonlight reflecting on calm dark water, stars visible above, bioluminescent plankton glowing along the shoreline, peaceful atmosphere, long exposure feel",
+        "blurry, distorted, static, low quality, watermark, text",
+        97,
+        768,
+        512,
+        456,
+        "randomize",
+        0.85
+      ],
+      "color": "#1b4332",
+      "bgcolor": "#2d6a4f"
+    },
+    {
+      "id": 12,
+      "type": "FW_VideoBatcher",
+      "pos": [1400, 500],
+      "size": {"0": 280, "1": 180},
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [
+        {"name": "video_1", "type": "IMAGE", "link": 18, "slot_index": 0},
+        {"name": "video_2", "type": "IMAGE", "link": 19, "slot_index": 1},
+        {"name": "video_3", "type": "IMAGE", "link": 20, "slot_index": 2},
+        {"name": "video_4", "type": "IMAGE", "link": null, "slot_index": 3},
+        {"name": "video_5", "type": "IMAGE", "link": null, "slot_index": 4},
+        {"name": "video_6", "type": "IMAGE", "link": null, "slot_index": 5},
+        {"name": "video_7", "type": "IMAGE", "link": null, "slot_index": 6},
+        {"name": "video_8", "type": "IMAGE", "link": null, "slot_index": 7},
+        {"name": "video_9", "type": "IMAGE", "link": null, "slot_index": 8},
+        {"name": "video_10", "type": "IMAGE", "link": null, "slot_index": 9}
+      ],
+      "outputs": [
+        {"name": "combined_video", "type": "IMAGE", "links": [21], "slot_index": 0},
+        {"name": "total_frames", "type": "INT", "links": [], "slot_index": 1}
+      ],
+      "properties": {"Node name for S&R": "FW_VideoBatcher"},
+      "widgets_values": [],
+      "color": "#4a1942",
+      "bgcolor": "#6b2c62"
+    },
+    {
+      "id": 13,
+      "type": "VHS_VideoCombine",
+      "pos": [1780, 500],
+      "size": {"0": 315, "1": 218},
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [
+        {"name": "images", "type": "IMAGE", "link": 21, "slot_index": 0},
+        {"name": "audio", "type": "AUDIO", "link": null, "slot_index": 1},
+        {"name": "meta_batch", "type": "VHS_BatchManager", "link": null, "slot_index": 2},
+        {"name": "vae", "type": "VAE", "link": null, "slot_index": 3}
+      ],
+      "outputs": [
+        {"name": "Filenames", "type": "VHS_FILENAMES", "links": [], "slot_index": 0}
+      ],
+      "properties": {"Node name for S&R": "VHS_VideoCombine"},
+      "widgets_values": [24, 0, "final_multi_scene", "video/h264-mp4", false, true, "", "", ""],
+      "color": "#553322",
+      "bgcolor": "#664433"
+    },
+    {
+      "id": 14,
+      "type": "PreviewImage",
+      "pos": [1400, 160],
+      "size": {"0": 280, "1": 240},
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [
+        {"name": "images", "type": "IMAGE", "link": 22, "slot_index": 0}
+      ],
+      "outputs": [],
+      "properties": {"Node name for S&R": "PreviewImage"},
+      "widgets_values": [],
+      "color": "",
+      "bgcolor": ""
+    },
+    {
+      "id": 15,
+      "type": "Note",
+      "pos": [860, 1220],
+      "size": {"0": 400, "1": 130},
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "properties": {},
+      "widgets_values": ["HOW TO ADD MORE SCENES:\n\n1. Right-click any Scene node → Clone\n2. Wire the previous scene's 'last_frame' into the new scene's 'reference_image'\n3. Wire the previous scene's 'ltx_pipe' into the new scene's 'ltx_pipe'\n4. Wire the new scene's 'video_frames' into the next free slot on VideoBatcher\n5. Change the prompt and seed"],
+      "color": "#335533",
+      "bgcolor": "#446644"
+    }
+  ],
+  "links": [
+    [1,  1, 0, 7, 0, "MODEL"],
+    [2,  2, 0, 7, 2, "CLIP"],
+    [3,  3, 0, 7, 1, "VAE"],
+    [4,  6, 0, 7, 3, "GUIDER"],
+    [5,  4, 0, 7, 4, "SAMPLER"],
+    [6,  5, 0, 7, 5, "SIGMAS"],
+    [7,  7, 0, 9, 0, "LTX_PIPE"],
+    [8,  8, 0, 9, 1, "IMAGE"],
+    [9,  9, 0, 10, 0, "LTX_PIPE"],
+    [10, 9, 2, 10, 1, "IMAGE"],
+    [11, 10, 0, 11, 0, "LTX_PIPE"],
+    [12, 10, 2, 11, 1, "IMAGE"],
+    [18, 9, 1, 12, 0, "IMAGE"],
+    [19, 10, 1, 12, 1, "IMAGE"],
+    [20, 11, 1, 12, 2, "IMAGE"],
+    [21, 12, 0, 13, 0, "IMAGE"],
+    [22, 9, 2, 14, 0, "IMAGE"]
+  ],
+  "groups": [
+    {
+      "id": 1,
+      "title": "🔧 Model Loaders",
+      "bounding": [40, 120, 720, 860],
+      "color": "#88A",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 2,
+      "title": "🎬 Scene Chain (last_frame → reference_image)",
+      "bounding": [840, 50, 430, 1320],
+      "color": "#8A8",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 3,
+      "title": "📹 Video Output",
+      "bounding": [1380, 470, 740, 280],
+      "color": "#AA8",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 4,
+      "title": "👁️ Scene 1 Preview",
+      "bounding": [1380, 130, 300, 300],
+      "color": "#A8A",
+      "font_size": 24,
+      "flags": {}
+    }
+  ],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.7,
+      "offset": [0, 0]
+    },
+    "info": {
+      "name": "LTX 2.3 Multi-Scene Chained Video",
+      "author": "FrameWeaver",
+      "description": "3-scene chained video generation using FW_LTXScene nodes. Each scene's last_frame wires into the next scene's reference_image for seamless I2V continuity.",
+      "version": "1.0.0",
+      "created_at": "2026-05-12"
+    }
+  },
+  "version": 0.4
+}
