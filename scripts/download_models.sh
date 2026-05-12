@@ -5,10 +5,10 @@
 #  Downloads all required models for LTX 2.3 chained scene generation.
 #
 #  Usage:
-#    COMFYUI_DIR=/workspace/ComfyUI bash scripts/download_models.sh
+#    COMFYUI_DIR=/workspace/runpod-slim/ComfyUI bash scripts/download_models.sh
 #
 #  Environment variables (all optional):
-#    COMFYUI_DIR          ComfyUI root directory (default: /workspace/ComfyUI)
+#    COMFYUI_DIR          ComfyUI root directory (default: /workspace/runpod-slim/ComfyUI)
 #    HF_TOKEN             Hugging Face auth token for gated models
 #    ARIA2_CONNECTIONS    Parallel connections (default: 16)
 #    ARIA2_SPLITS         Download splits (default: 16)
