@@ -16,7 +16,7 @@
 # ================================================================== #
 set -euo pipefail
 
-COMFYUI_DIR="${COMFYUI_DIR:-/workspace/ComfyUI}"
+COMFYUI_DIR="${COMFYUI_DIR:-/workspace/runpod-slim/ComfyUI}"
 BASE_DIR="${COMFYUI_DIR}/models"
 
 ARIA2_CONNECTIONS="${ARIA2_CONNECTIONS:-16}"

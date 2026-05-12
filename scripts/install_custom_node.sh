@@ -15,7 +15,7 @@
 # ================================================================== #
 set -euo pipefail
 
-COMFYUI_DIR="${COMFYUI_DIR:-/workspace/ComfyUI}"
+COMFYUI_DIR="${COMFYUI_DIR:-/workspace/runpod-slim/ComfyUI}"
 REPO_URL="${MAGIC_REPO_URL:-https://github.com/balarooty/comfyui-magic.git}"
 NODE_DIR="${COMFYUI_DIR}/custom_nodes/comfyui-magic"
 
