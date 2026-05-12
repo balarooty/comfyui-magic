@@ -34,17 +34,22 @@ install_aria2() {
         return
     fi
 
+    local SUDO=""
+    if command -v sudo >/dev/null 2>&1 && [ "$(id -u)" -ne 0 ]; then
+        SUDO="sudo"
+    fi
+
     log "aria2 not found, installing..."
     if command -v apt-get >/dev/null 2>&1; then
-        sudo apt-get update -qq
-        sudo apt-get install -y aria2
+        $SUDO apt-get update -qq
+        $SUDO apt-get install -y aria2
     elif command -v apt >/dev/null 2>&1; then
-        sudo apt update -qq
-        sudo apt install -y aria2
+        $SUDO apt update -qq
+        $SUDO apt install -y aria2
     elif command -v brew >/dev/null 2>&1; then
         brew install aria2
     elif command -v pacman >/dev/null 2>&1; then
-        sudo pacman -Sy --noconfirm aria2
+        $SUDO pacman -Sy --noconfirm aria2
     else
         die "Could not install aria2 automatically. Install aria2 and rerun."
     fi
