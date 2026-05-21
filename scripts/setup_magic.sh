@@ -5,13 +5,13 @@
 #  One-command installation: custom nodes + dependencies + all models.
 #
 #  Usage:
-#    COMFYUI_DIR=/workspace/runpod-slim/ComfyUI bash scripts/setup_magic.sh
+#    COMFYUI_DIR=/workspace/ComfyUI bash scripts/setup_magic.sh
 #
 #    # With HF auth for gated models
-#    HF_TOKEN=hf_xxxxx COMFYUI_DIR=/workspace/runpod-slim/ComfyUI bash scripts/setup_magic.sh
+#    HF_TOKEN=hf_xxxxx COMFYUI_DIR=/workspace/ComfyUI bash scripts/setup_magic.sh
 #
 #  Environment variables (all optional):
-#    COMFYUI_DIR          ComfyUI root directory (default: /workspace/runpod-slim/ComfyUI)
+#    COMFYUI_DIR          ComfyUI root directory (default: /workspace/ComfyUI)
 #    HF_TOKEN             Hugging Face auth token for gated models
 # ================================================================== #
 set -euo pipefail

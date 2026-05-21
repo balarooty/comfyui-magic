@@ -6,16 +6,16 @@
 #  custom_nodes directory.
 #
 #  Usage:
-#    COMFYUI_DIR=/workspace/runpod-slim/ComfyUI bash scripts/install_custom_node.sh
+#    COMFYUI_DIR=/workspace/ComfyUI bash scripts/install_custom_node.sh
 #
 #  Environment variables (all optional):
-#    COMFYUI_DIR          ComfyUI root (default: /workspace/runpod-slim/ComfyUI)
+#    COMFYUI_DIR          ComfyUI root (default: /workspace/ComfyUI)
 #    MAGIC_REPO_URL       Git clone URL (default: this repo)
 #    PYTHON_BIN           Python to use (auto-detected)
 # ================================================================== #
 set -euo pipefail
 
-COMFYUI_DIR="${COMFYUI_DIR:-/workspace/runpod-slim/ComfyUI}"
+COMFYUI_DIR="${COMFYUI_DIR:-/workspace/ComfyUI}"
 REPO_URL="${MAGIC_REPO_URL:-https://github.com/balarooty/comfyui-magic.git}"
 NODE_DIR="${COMFYUI_DIR}/custom_nodes/comfyui-magic"
 
